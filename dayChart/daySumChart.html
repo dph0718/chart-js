@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>On the Daily</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./dayChart.css">
+</head>
+
+<body>
+    <h2>Daily Sum Form</h2>
+    <div id="activityButtonBoard" class="container-fluid">
+        <div class="col-3">
+            <div class="activityButton card col-3">
+                <!-- <canvas>The chart go here.</canvas> -->
+                <img class="radarImage card-img-top" src="../radar.png" />
+                <div class="row">
+                    <div class="plusBut btn btn-success col-sm" title="adds one to the activity's total">+</div>
+                    <div class="minusBut btn btn-danger col-sm" title="subtracts one from the activity's total">-</div>
+                </div>
+                <div class="activityTotal" title="the activity's total">9</div>
+            </div>
+        </div>
+
+    </div>
+    <ul>
+        Here, we'll need:
+
+        <li><i>this should be the default page displayi</i></li>
+        <li>When they're clicked, their aspect values are added to the daily sum array</li>
+        <li>The ideal aspect values are multiplied by the number of daily activities </li>
+        <li></li>
+
+    </ul>
+
+    <canvas id="myChart" width="80vw" height="40vh" role="img" aria-label="Hello ARIA world">
+        <p>Some fallback text.</p>
+    </canvas>
+
+    <script src="daySumChart.js">    </script>
+
+</body>
+
+</html>
