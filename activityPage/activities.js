@@ -1,15 +1,4 @@
 
-//This will be taken from the DB.
-const values = ["family", "marriage", "parenting", "friends", "liesure", "work", "spirituality", "community", "health"]
-//This will be taken from the DB.
-const myIdealValues = [4, 4, 3, 6, 5, 7, 4, 1, 8];
-//empty for storing entered values
-let itemValWeightArray = [];
-//empty for storing calculated differences between Ideal and Activity Facet Values.
-let valueDifArray = [];
-let newActivityObject = {};
-
-
 // Defining the User class
 class User {
     constructor(firstName, lastName, idealsArray, activitiesArray) {
@@ -29,36 +18,23 @@ class Activity {
     };
     addOne() {
         this.totalCompleted++;
-        console.log('this \\/');
-        console.log(this.totalCompleted)
     };
     subtractOne() {
-        console.log("I'm subtracting!")
-        console.log('this \\/');
         this.totalCompleted--;
-        console.log(this.totalCompleted);
     };
 };
 // Defining the button class to be added to each radar card
 class Button {
     constructor(operation, activity) {
-        
+
         this.operation = operation;
         this.activity = activity;
         this.change = () => {
             if (this.operation == "add") {
-                console.log(`Adding from within the ${this.activity.name.replace(/\s/g, '')}  Card!`);
-                console.log(`It went from ${this.activity.totalCompleted} to:`);
                 this.activity.addOne()
-                
             } else {
-                console.log(`Subtracting from within the ${this.activity.name.replace(/\s/g, '')}  Card!`);
-                console.log(`It went from ${this.activity.totalCompleted} to:`);
                 this.activity.subtractOne();
             }
-            console.log(`Looking for $("#${this.activity.name.replace(/\s/g, '')}total")`);
-            
-            
 
             $(`#${this.activity.name.replace(/\s/g, '')}total`).text(this.activity.totalCompleted);
         }
@@ -80,9 +56,10 @@ class ActivityCard {
         let $radar = $("<img>").attr('src', "../radar.png")
         let $addButton = new Button('add', this.activity);
         let $subButton = new Button('subtract', this.activity);
-        let $total = $("<h1>").attr('id', this.activity.name.replace(/\s/g, '') + "total").text(this.activity.totalCompleted)
-        console.log(`The ${this.activity.name} card is being made.`)
-        
+        let $total = $("<h1>")
+            .attr('id', this.activity.name.replace(/\s/g, '') + "total")
+            .text(this.activity.totalCompleted)
+
         return ($('<div>')
             .attr('id', `${this.activity.name.replace(/\s/g, '')}-card`)
             .addClass('activityCard')
