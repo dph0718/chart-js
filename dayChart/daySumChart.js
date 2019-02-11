@@ -2,7 +2,7 @@
 // all their activities (as objects)
 let activities = [];
 // all their 
-localStorage.setItem("allActivities", JSON.stringify({
+localStorage.setItem("allDBActivities", JSON.stringify({
     activities: [
         {
             name: "moonwalking",
@@ -19,7 +19,8 @@ localStorage.setItem("allActivities", JSON.stringify({
 //DATABASE CODE HERE! It's FIRST THING TO DO! ----------------
 //but for now, we use localStorage again.
 
-let allActivities = JSON.parse(localStorage.getItem("allActivities"));
+let allActivitiesOb = JSON.parse(localStorage.getItem("allDBActivities"));
+let allActivities = allActivitiesOb.activities;
 
 if (allActivities) {
     console.log('allActivities exists. See?', allActivities)
@@ -36,14 +37,14 @@ let newActivity = {
 $(document).keypress(function (e) {
     if (e.key === "m") {
 
-        allActivities.activities.push(newActivity)
+        allActivities.push(newActivity)
     } else {
         console.log('not M')
     }
 
     console.log('here it is:clog    ')
     console.log(allActivities);
-    localStorage.setItem("allActivities", allActivities)
+    localStorage.setItem("allDBActivities", JSON.stringify(allActivities));
 
 
 })

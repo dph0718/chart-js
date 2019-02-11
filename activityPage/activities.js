@@ -29,25 +29,38 @@ class Activity {
     };
     addOne() {
         this.totalCompleted++;
-        console.log("I'm adding!")
+        console.log('this \\/');
+        console.log(this.totalCompleted)
     };
     subtractOne() {
         console.log("I'm subtracting!")
+        console.log('this \\/');
         this.totalCompleted--;
+        console.log(this.totalCompleted);
     };
 };
 // Defining the button class to be added to each radar card
 class Button {
     constructor(operation, activity) {
+        
         this.operation = operation;
         this.activity = activity;
         this.change = () => {
             if (this.operation == "add") {
+                console.log(`Adding from within the ${this.activity.name.replace(/\s/g, '')}  Card!`);
+                console.log(`It went from ${this.activity.totalCompleted} to:`);
                 this.activity.addOne()
+                
             } else {
+                console.log(`Subtracting from within the ${this.activity.name.replace(/\s/g, '')}  Card!`);
+                console.log(`It went from ${this.activity.totalCompleted} to:`);
                 this.activity.subtractOne();
             }
+            console.log(`Looking for $("#${this.activity.name.replace(/\s/g, '')}total")`);
+            
+            
 
+            $(`#${this.activity.name.replace(/\s/g, '')}total`).text(this.activity.totalCompleted);
         }
 
         return ($('<button>')
@@ -67,20 +80,19 @@ class ActivityCard {
         let $radar = $("<img>").attr('src', "../radar.png")
         let $addButton = new Button('add', this.activity);
         let $subButton = new Button('subtract', this.activity);
+        let $total = $("<h1>").attr('id', this.activity.name.replace(/\s/g, '') + "total").text(this.activity.totalCompleted)
+        console.log(`The ${this.activity.name} card is being made.`)
         
-
-
         return ($('<div>')
-            .attr('id', `${this.activity.name}-card`)
+            .attr('id', `${this.activity.name.replace(/\s/g, '')}-card`)
             .addClass('activityCard')
             .text(this.activity.name))
             .attr('title', this.activity.idealWeights)
+            .append($total)
             .append($radar)
             .append($addButton)
             .append($subButton)
     }
-
-
 }
 
 // Make all of Butler's Ideals objects ( no Ideal class.)
@@ -130,32 +142,23 @@ let usersActivities = [
     new Activity("showering", [5, 4, 3, 2, 1, 5, 3, 2, 6], 14),
     new Activity("cooking dinner", [4, 5, 7, 6, 3, 4, 1, 1, 3], 20),
     new Activity("playing with legos", [7, 2, 4, 6, 8, 1, 6, 6, 9], 4),
-    new Activity("brushing teeth", [2, 2, 2, 2, 2, 2, 6, 8, 1]),
-    new Activity("baking brownies", [9, 1, 9, 1, 9, 1, 9, 1, 9]),
+    new Activity("brushing teeth", [2, 2, 2, 2, 2, 2, 6, 8, 1], 19),
+    new Activity("baking brownies", [9, 1, 9, 1, 9, 1, 9, 1, 9], 3),
 ]
 
 
 //Making Butler a User with activities & ideals.
 let user = new User("Butler", "Nutler", usersIdeals, usersActivities)
 
-let eating = new Activity('eating', [1, 2, 3, 4, 1, 2, 3, 4, 1], 12);
-
-let $addButton = new Button('add', eating);
-let $subButton = new Button('subtract', eating);
-
-
-
-$(document.body).append($addButton).append($subButton);
-
 
 // Make a function makeActivityCards() that loops through each of the user's activities and:
-// [ ]  makes a radar chart card for each one
-// [ ] puts an add and subtract button on each one
-//      [ ] that adds/subtracts the total number of times the activity's been done.
+// [X]  makes a radar chart card for each one
+// [X] puts an add and subtract button on each one
+//      [X] that adds/subtracts the total number of times the activity's been done.
 //      [ ] and stores the new number in the db (localStorage for now)
 
 makeActivityCards = () => {
-    user.activities.forEach((e, i) => {
+    user.activitiesArray.forEach((e, i) => {
         let $newCard = new ActivityCard(e);
         $(document.body).append($newCard)
     })
@@ -219,20 +222,6 @@ submitForm = () => {
     //and Create the Chart!
     createChart(baseline, valueDifArray, actName);
 
-};
-
-//Makes the inputs for all the Values
-populateFormInputs = () => {
-    // Each Value gets an input with its name and id 
-    values.forEach((e, i) => {
-        let $valInput = $("<input>")
-            .addClass('valInput')
-            .attr('type', 'number')
-            .attr('id', `${e}Weight`)
-            //for now, make them all 5.
-            .val(5);
-        $("#valuesForm").append(e).append($valInput).append("<br>")
-    });
 };
 
 // creates a chart from the info harvested.
@@ -310,8 +299,8 @@ createChart = (idealArray, itemArray, activityName) => {
 
 };
 
-//Make the inputs for all the Values
-populateFormInputs();
+//Make the Activity Cards on the page.
+makeActivityCards();
 
 //call the submitForm function when submit button is clicked.
 $("#valueFormSubmit").click(function () {
